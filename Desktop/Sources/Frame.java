@@ -10,6 +10,7 @@ public class Frame {
 
 	private JFrame frame;
 	private Container MainMenu;
+	
 
 	/**
 	 * Launch the application.
@@ -44,8 +45,9 @@ public class Frame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MainMenu.setLayout(null);
 		
+		
 		JButton btnNewButton = new JButton("PLAY");
-		//btnNewButton.addActionListener(e->play());
+		//btnNewButton.addActionListener(e->Play());
 		btnNewButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 29));
 		btnNewButton.setBounds(378, 396, 520, 87);
 		MainMenu.add(btnNewButton);
@@ -66,5 +68,15 @@ public class Frame {
 	private void Quit() {
 		System.exit(0);
 	}
+	
+	private void Play() {
+		
+		
+	}
+	
+	private void HighScore() {
+		
+	}
+	
 	
 }

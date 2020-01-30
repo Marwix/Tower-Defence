@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.Container;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -10,10 +12,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class PlayLayout {
 
 	private JFrame frame;
+	private Container PlayLayout;
 
 	/**
 	 * Launch the application.
@@ -43,12 +47,14 @@ public class PlayLayout {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		PlayLayout = frame.getContentPane();
+		
 		frame.setBounds(100, 100, 1300, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		PlayLayout.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.WEST);
+		PlayLayout.add(panel, BorderLayout.WEST);
 		
 		JButton btnNewButton = new JButton("New button");
 		
@@ -91,7 +97,7 @@ public class PlayLayout {
 		panel.setLayout(gl_panel);
 		
 		JPanel panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1, BorderLayout.SOUTH);
+		PlayLayout.add(panel_1, BorderLayout.SOUTH);
 		
 		JLabel lblNewLabel = new JLabel("HP PANEL");
 		
@@ -118,6 +124,11 @@ public class PlayLayout {
 					.addComponent(lblNewLabel_2))
 		);
 		panel_1.setLayout(gl_panel_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.BLUE);
+		panel_2.setForeground(Color.BLUE);
+		frame.getContentPane().add(panel_2, BorderLayout.CENTER);
 		
 		
 		

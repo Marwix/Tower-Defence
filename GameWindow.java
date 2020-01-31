@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.GroupLayout;
@@ -18,8 +19,15 @@ public class GameWindow {
 	
 	private JFrame frame;
 	private Container MainMenu, GameWindow;
+	JLabel goldDisplayLabel, scoreDisplayLabel, hpDisplayLabel;
 	
 	
+	/**
+	 * Create window 
+	 * Create MainMenu container for its items
+	 * Create GameWindow container for its items (play area and so on)
+	 *
+	 */
 	
 	public GameWindow() {
 		MainMenu = new Container();
@@ -30,151 +38,196 @@ public class GameWindow {
 		
 	}
 	
+	/**
+	 * MainMenu initialization 
+	 */
 	public void initializeMainMenu() {
 		
-		
+		/**
+		 * Create the main frame and assign its content pane to MainMenu
+		 * 
+		 */
 		frame = new JFrame("Tower Defence");
 		MainMenu = frame.getContentPane();
 		frame.setBounds(100, 100, 1300, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//setup for main menu buttons
 		MainMenu.setLayout(null);
 		
+		//Play button
+		JButton playButton = new JButton("PLAY");
+		playButton.addActionListener(e->Play());
+		playButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 29));
+		playButton.setBounds(378, 396, 520, 87);
+		MainMenu.add(playButton);
 		
-		JButton btnNewButton = new JButton("PLAY");
-		btnNewButton.addActionListener(e->Play());
-		btnNewButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 29));
-		btnNewButton.setBounds(378, 396, 520, 87);
-		MainMenu.add(btnNewButton);
+		//Highscore button
+		JButton highScoreButton = new JButton("HIGHSCORE");
+		highScoreButton.addActionListener(e->HighScore());
+		highScoreButton.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 29));
+		highScoreButton.setBounds(378, 493, 520, 74);
+		MainMenu.add(highScoreButton);
 		
-		JButton btnNewButton_1 = new JButton("HIGHSCORE");
-		btnNewButton_1.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 29));
-		btnNewButton_1.setBounds(378, 493, 520, 74);
-		MainMenu.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("QUIT");
-		btnNewButton_2.addActionListener(e->Quit());
-		btnNewButton_2.setForeground(Color.RED);
-		btnNewButton_2.setFont(new Font("Microsoft YaHei", Font.BOLD, 29));
-		btnNewButton_2.setBounds(378, 574, 520, 74);
-		MainMenu.add(btnNewButton_2);
+		//Quit button
+		JButton quitButton = new JButton("QUIT");
+		quitButton.addActionListener(e->Quit());
+		quitButton.setForeground(Color.RED);
+		quitButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 29));
+		quitButton.setBounds(378, 574, 520, 74);
+		MainMenu.add(quitButton);
 		frame.setVisible(true);
 	}
 	
 	
 	
-	
+	/**
+	 * Method for quitButton
+	 * Shuts down the program
+	 */
 	private void Quit() {
 		System.exit(0);
 	}
 	
+	/**
+	 * Method for playButton
+	 * Changes content pane to game view
+	 * Hides mainMenu
+	 */
 	private void Play() {
 		MainMenu.setVisible(false);
 		frame.setContentPane(GameWindow);
 		GameWindow.setVisible(true);
 		System.out.println("PLAY PRESSED");
+		setDisplayGold(0);
+		setDisplayHP(100);
+		setDisplayScore(0);
 		
 	}
-	
+	/**
+	 * Method for highScoreButton
+	 * Opens high score window
+	 */
 	private void HighScore() {
-		
+		//new HighScoreWindow;
 	}
 	
 	
-	
+	/**
+	 * GameWindow initialization
+	 * 
+	 */
 	private void initializeGameWindow() {
 		
 		GameWindow.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		GameWindow.add(panel, BorderLayout.WEST);
+		//Creating left menu panel
+		//For chosing tower to buy
+		//or entering "SELL MODE"
+		JPanel towerMenuPanel = new JPanel();
+		GameWindow.add(towerMenuPanel, BorderLayout.WEST);
 		
-		JButton btnNewButton = new JButton("New button");
+		//Maybe improve this later
+		//quick fix to make the buttons align properly
+		JButton yellowTowerButton = new JButton("Yellow Tower");
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton blueTowerButton = new JButton(" Blue Tower   ");
 		
-		JButton btnNewButton_2 = new JButton("Sell");
+		JButton sellButton = new JButton("Sell");
 		
-		JButton btnNewButton_3 = new JButton("Red Tower");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
+		JButton redTowerButton = new JButton("  Red Tower  ");
+		GroupLayout towerButtonPanel = new GroupLayout(towerMenuPanel);
+		//Left panel button placements
+		towerButtonPanel.setHorizontalGroup(
+			towerButtonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(towerButtonPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton_3)
-						.addComponent(btnNewButton))
+					.addGroup(towerButtonPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(redTowerButton)
+						.addComponent(yellowTowerButton))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(gl_panel.createSequentialGroup()
+				.addGroup(towerButtonPanel.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnNewButton_1)
+					.addComponent(blueTowerButton)
 					.addContainerGap())
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+				.addGroup(Alignment.LEADING, towerButtonPanel.createSequentialGroup()
 					.addGap(29)
-					.addComponent(btnNewButton_2)
+					.addComponent(sellButton)
 					.addContainerGap(31, Short.MAX_VALUE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
+		towerButtonPanel.setVerticalGroup(
+			towerButtonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(towerButtonPanel.createSequentialGroup()
 					.addContainerGap(238, Short.MAX_VALUE)
-					.addComponent(btnNewButton_3)
+					.addComponent(redTowerButton)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton)
+					.addComponent(yellowTowerButton)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton_1)
+					.addComponent(blueTowerButton)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton_2)
+					.addComponent(sellButton)
 					.addGap(314))
 		);
-		panel.setLayout(gl_panel);
 		
-		JPanel panel_1 = new JPanel();
-		GameWindow.add(panel_1, BorderLayout.SOUTH);
+		//Insert button panel into menu panel
+		towerMenuPanel.setLayout(towerButtonPanel);
 		
-		JLabel lblNewLabel = new JLabel("HP PANEL");
+		//Set up for bottom menu panel
 		
-		JLabel lblNewLabel_1 = new JLabel("GULD PANEL");
+		JPanel infoPanel = new JPanel();
+		GameWindow.add(infoPanel, BorderLayout.SOUTH);
 		
-		JLabel lblNewLabel_2 = new JLabel("SCOREPANEL");
-		
-		JButton MainMenuButton = new JButton("Main Menu");
-		MainMenuButton.addActionListener(e->mainMenu());
+		hpDisplayLabel = new JLabel("HP PANEL");
 		
 		
-		JButton btnPause = new JButton("Pause");
+		goldDisplayLabel = new JLabel("GULD PANEL");
 		
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		scoreDisplayLabel = new JLabel("SCOREPANEL");
+		
+		JButton mainMenuButton = new JButton("Main Menu");
+		mainMenuButton.addActionListener(e->mainMenu());
+		
+		
+		JButton pauseButton = new JButton("Pause");
+		
+		GroupLayout bottomPanelLayout = new GroupLayout(infoPanel);
+		
+		//Layou setup for bottom panel
+		bottomPanelLayout.setHorizontalGroup(
+				bottomPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(bottomPanelLayout.createSequentialGroup()
 					.addGap(37)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addComponent(hpDisplayLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addComponent(goldDisplayLabel, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scoreDisplayLabel, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 687, Short.MAX_VALUE)
-					.addComponent(btnPause)
+					.addComponent(pauseButton)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(MainMenuButton)
+					.addComponent(mainMenuButton)
 					.addGap(61))
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_2)
-					.addComponent(lblNewLabel_1)
-					.addComponent(MainMenuButton)
-					.addComponent(btnPause))
+		bottomPanelLayout.setVerticalGroup(
+				bottomPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(bottomPanelLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(hpDisplayLabel, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+					.addComponent(scoreDisplayLabel)
+					.addComponent(goldDisplayLabel)
+					.addComponent(mainMenuButton)
+					.addComponent(pauseButton))
 		);
-		panel_1.setLayout(gl_panel_1);
+		//Add menu layout to bottom infoPanel
+		infoPanel.setLayout(bottomPanelLayout);
+		
+		//Game frame - replace later with actual game frame?
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.BLUE);
 		panel_2.setForeground(Color.BLUE);
 		GameWindow.add(panel_2, BorderLayout.CENTER);
 		
+		//Create the top menu ?Move to main menu creation instead?
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
@@ -184,17 +237,43 @@ public class GameWindow {
 		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mnFile.add(mntmQuit);
 		
+		
+		//Insert dev operations into this JMenu
+		//= insert JMenuItems into it and add actions to new items
 		JMenu mnDev = new JMenu("Dev");
 		menuBar.add(mnDev);
 		
 	}
 	
+	//Switch back to main menu view when "Main Menu" is pressed
 	private void mainMenu() {
 		GameWindow.setVisible(false);
 		frame.setContentPane(MainMenu);
 		MainMenu.setVisible(true);
 		System.out.println("MAIN MENU PRESSED");
 		
+	}
+	
+	
+	//Public methods for displaying information to player
+	//replace with listeners later?
+	
+	public void setDisplayGold(int gold) {
+		goldDisplayLabel.setText("GOLD: " + gold);
+		goldDisplayLabel.setForeground(Color.YELLOW);
+	
+	}
+	
+	public void setDisplayHP(int hp) {
+		hpDisplayLabel.setText("GOLD: " + hp);
+		hpDisplayLabel.setForeground(Color.RED);
+	
+	}
+	
+	public void setDisplayScore(int score) {
+		scoreDisplayLabel.setText("SCORE: " + score);
+		scoreDisplayLabel.setForeground(Color.GREEN);
+	
 	}
 
 }

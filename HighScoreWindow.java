@@ -5,25 +5,13 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import javax.swing.SwingConstants;
 
 import javax.swing.JTextArea;
-
-import javax.swing.DropMode;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import net.miginfocom.swing.MigLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.SystemColor;
 
 
 public class HighScoreWindow {
@@ -79,7 +67,8 @@ public class HighScoreWindow {
 		textArea.setEditable(false);
 		textArea.setFont(new Font("Gill Sans Ultra Bold Condensed", Font.ITALIC, 25));
 		textArea.setRows(10);
-		textArea.setText("TEST 1\n");
+		textArea.setText("TEST 1\nTEST 2\nTEST 3\nTEST 4\nTEST 5\nTEST 6\n"
+						+ "TEST 8\nTEST 8\nTEST 9\nTEST 10\n");
 		textPanel.add(scrollPane);
 		
 		

@@ -160,7 +160,7 @@ public class GameWindow {
 	 * Opens high score window
 	 */
 	private void HighScore() {
-		//new HighScoreWindow();
+		new HighScoreWindow();
 	}
 	
 	

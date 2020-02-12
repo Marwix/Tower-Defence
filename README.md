@@ -2,5 +2,6 @@
 
 This is where we build Tower Defence. 
 
-We are united.
+Course: DAT055
+Group: 6
 

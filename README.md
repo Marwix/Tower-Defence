@@ -2,6 +2,6 @@
 
 This is where we build Tower Defence. 
 
-Course: DAT055<br/>
-Group: 6
+Course: <b>DAT055</b><br/>
+Group: <b>6</b>
 

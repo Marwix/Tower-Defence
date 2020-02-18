@@ -12,11 +12,11 @@ public class Tile extends Rectangle {
 	
 	public void draw(Graphics g) {
 		if(Type == 1) {
-			g.drawImage(Panel.Grass1[Type], x, y, header.WIDTH, header.Heigth, null);
+			g.drawImage(TextureHandler.grass1, x, y, header.WIDTH, header.Heigth, null);
 		}else if(Type == 2) {
-			g.drawImage(Panel.Water1[Type], x, y, header.WIDTH, header.Heigth, null);
+			g.drawImage(TextureHandler.water1, x, y, header.WIDTH, header.Heigth, null);
 		}else if (Type == 0) {
-			g.drawImage(Panel.Bricks1[Type], x, y, header.WIDTH, header.Heigth, null);
+			g.drawImage(TextureHandler.brick1, x, y, header.WIDTH, header.Heigth, null);
 		}
 		else{
 			g.drawRect(x, y, width, height);

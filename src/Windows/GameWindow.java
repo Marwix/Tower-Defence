@@ -23,6 +23,7 @@ import MouseSettings.*;
 public class GameWindow implements Window, SwitchableWindow{
 	
 	public static Panel GamePanel;
+	public static Player player;
 	
 	private Container GameContent;
 	JLabel goldDisplayLabel, scoreDisplayLabel, hpDisplayLabel;
@@ -45,7 +46,9 @@ public class GameWindow implements Window, SwitchableWindow{
 	public GameWindow(SwitchableWindow original) throws IOException {
 		MainMenu = original;
 		GameContent = new Container();
+		GamePanel = new Panel();
 		
+		player = new Player(100, 10);
 		
 		initialize();
 	}
@@ -123,18 +126,18 @@ public class GameWindow implements Window, SwitchableWindow{
 		infoPanel.setBackground(Color.DARK_GRAY);
 		GameContent.add(infoPanel, BorderLayout.SOUTH);
 		
-		hpDisplayLabel = new JLabel("HP: 100");
+		hpDisplayLabel = new JLabel("HP: " +player.getHealth());
 		hpDisplayLabel.setToolTipText("Health Points - if it reaches 0 you lose");
 		hpDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		hpDisplayLabel.setForeground(Color.RED);
 		
 		
-		goldDisplayLabel = new JLabel("GOLD: 10000");
+		goldDisplayLabel = new JLabel("GOLD: " + player.getGold());
 		goldDisplayLabel.setToolTipText("Gold: currency use to buy towers");
 		goldDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		goldDisplayLabel.setForeground(Color.YELLOW);
 		
-		scoreDisplayLabel = new JLabel("SCORE: 10000");
+		scoreDisplayLabel = new JLabel("SCORE: " + player.getScore());
 		scoreDisplayLabel.setToolTipText("Score: earned by killing monsters (and completing rounds?)");
 		scoreDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		scoreDisplayLabel.setForeground(Color.ORANGE);
@@ -186,7 +189,6 @@ public class GameWindow implements Window, SwitchableWindow{
 		
 		//Game frame - replace later with actual game frame?
 		
-		GamePanel = new Panel();
 		GameContent.add(GamePanel, BorderLayout.CENTER);
 		
 
@@ -212,20 +214,20 @@ public class GameWindow implements Window, SwitchableWindow{
 	//Public methods for displaying information to player
 	//replace with listeners later?
 	
-	public void setDisplayGold(int gold) {
-		goldDisplayLabel.setText("GOLD: " + gold);
+	public void setDisplayGold() {
+		goldDisplayLabel.setText("GOLD: " + player.getGold());
 		goldDisplayLabel.setForeground(Color.YELLOW);
 	
 	}
 	
-	public void setDisplayHP(int hp) {
-		hpDisplayLabel.setText("GOLD: " + hp);
+	public void setDisplayHP() {
+		hpDisplayLabel.setText("HP: " + player.getHealth());
 		hpDisplayLabel.setForeground(Color.RED);
 	
 	}
 	
-	public void setDisplayScore(int score) {
-		scoreDisplayLabel.setText("SCORE: " + score);
+	public void setDisplayScore() {
+		scoreDisplayLabel.setText("SCORE: " + player.getScore());
 		scoreDisplayLabel.setForeground(Color.GREEN);
 	
 	}

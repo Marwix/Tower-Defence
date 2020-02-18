@@ -2,7 +2,7 @@ package Game;
 
 public class Player {
 
-	private int health, score;
+	private int health, score, gold;
 	private String player;
 
 	/**
@@ -10,9 +10,10 @@ public class Player {
 	 * 
 	 * @param initHealth
 	 */
-	public Player(int initHealth) {
+	public Player(int initHealth, int Gold) {
 		health = initHealth;
 		score = 0;
+		gold = Gold;
 	}
 
 	/**
@@ -62,6 +63,16 @@ public class Player {
 	 */
 	public int getScore() {
 		return score;
+
+	}
+
+	/**
+	 * Returns current gold as an int
+	 * 
+	 * @return current gold as int
+	 */
+	public int getGold() {
+		return gold;
 
 	}
 

@@ -8,10 +8,10 @@ public class TileMap {
 	public Tile[][] tile;
 	public int gridWidth;
 	public int gridHeight;
-	public ReadFile readfile;
+	public MapHandler readfile;
 	
 	public TileMap() {
-		readfile = new ReadFile("map/testmap.txt");
+		readfile = new MapHandler("map/testmap.txt");
 		readfile.LoadMapFromText();
 		readGrid();
 	}

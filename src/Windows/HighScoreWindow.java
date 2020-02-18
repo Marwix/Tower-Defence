@@ -14,6 +14,12 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import Network.*;
 
+/**
+ * 
+ * Displays high score stored on the server
+ * 
+ *
+ */
 public class HighScoreWindow implements Window {
 
 	private JFrame frame;

@@ -1,6 +1,7 @@
 package Windows;
 import java.awt.Container;
 
+
 public interface SwitchableWindow {
 	/**
 	 * Every switchable window needs to be able to return the content to be shown

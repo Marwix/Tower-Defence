@@ -68,8 +68,9 @@ public class MainMenu implements Window, SwitchableWindow {
 		highScoreButton.setBounds(378, 493, 520, 74);
 		MainMenu.add(highScoreButton);
 		//Enable if server is reachable
-		highScoreButton.setEnabled(client.serverReachable());
-
+		boolean connectionStatus = client.serverReachable();
+		highScoreButton.setEnabled(connectionStatus);
+		
 		// Quit button
 		quitButton = new JButton("QUIT");
 		quitButton.addActionListener(e -> Quit());
@@ -125,6 +126,9 @@ public class MainMenu implements Window, SwitchableWindow {
 			}
 		});
 		frame.setVisible(true);
+		if (!connectionStatus) {
+			new PopupInfo("Server not found\nHighscore disabled", "Inane error");
+		}
 	}
 
 	/**

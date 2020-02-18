@@ -3,8 +3,9 @@ import java.net.*;
 import java.io.*;
 
 /**
- * This code is used to set up the client side for the server. Can send and
- * receive scores
+ * Used to establish connection to a server
+ * and send/retrieve data from it.
+ * 
  *
  */
 public class Client {
@@ -25,8 +26,6 @@ public class Client {
 	public Client(String address, int port) {
 		this.address = address;
 		this.port = port;
-		// Kanske lägga in något för att kontrollera att anslutningen lyckades
-		// Och baserat på detta resultat aktivera/avaktivera highscore i mainmenu?
 
 	}
 
@@ -73,10 +72,10 @@ public class Client {
 
 		} catch (UnknownHostException e) {
 			connected = false;
-			// e.printStackTrace();
+			e.printStackTrace();
 		} catch (IOException e) {
 			connected = false;
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
@@ -90,7 +89,7 @@ public class Client {
 			output.close();
 			socket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -98,6 +97,8 @@ public class Client {
 
 	/**
 	 * Test connection
+	 * Returns true if successful 
+	 * false otherwise
 	 */
 	public boolean serverReachable() {
 		connect();
@@ -112,10 +113,15 @@ public class Client {
 			return connected;
 		}
 		disconnect();
-
+		
 		return connected;
 	}
 
+	/**
+	 * Requests top ten player + score from server
+	 * 
+	 * @return returns string of top 10 in one line divided by commas (",")
+	 */
 	public String getTopTen() {
 
 		String indata = "";

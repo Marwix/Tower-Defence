@@ -16,8 +16,11 @@ import javax.imageio.ImageIO;
  */
 
 public enum TextureHandler {
-	WATER("Water1"), GRASS("Grass1"), BRICK("Brick1"), GREEN_MONSTER("GreenMonster"),
-	RED_TOWER("RedTower1"), YELLOW_TOWER("YellowTower1"),BLUE_TOWER("BlueTower1"), EMPTY("Empty");
+	WATER("Water1"), GRASS("Grass1"), BRICK("Brick1"),EXIT("BrickExit"), 
+	GREEN_MONSTER("GreenMonster"), RED_MONSTER("RedMonster"), YELLOW_DEVIL("YellowDevil"),INVIS_MONSTER("Monster7"),
+	MIKEY("Mikey"), SPOOKEY("Spookey"),
+	RED_TOWER("RedTower1"), YELLOW_TOWER("YellowTower1"),BLUE_TOWER("BlueTower1"), EMPTY("Empty"), SELL("Sell"),
+	RED_PROJECTILE("RedProjectile"), BLUE_PROJECTILE("BlueProjectile"),YELLOW_PROJECTILE("YellowProjectile");
 
 	public final BufferedImage img;
 

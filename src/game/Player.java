@@ -1,19 +1,36 @@
 package game;
 
-public class Player {
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import windows.GameWindow;
+import windows.UserInterface;
+
+public class Player{
 
 	private int health, score, gold;
 	private String player;
+	UserInterface ui;
 
 	/**
 	 * New player setup
 	 * 
 	 * @param initHealth
 	 */
-	public Player(int initHealth, int Gold) {
+	public Player(int initHealth, int Gold, UserInterface ui) {
 		health = initHealth;
 		score = 0;
 		gold = Gold;
+		this.ui = ui;
+		
 	}
 
 	/**
@@ -37,7 +54,7 @@ public class Player {
 		health = health + change;
 		if (health < 0)
 			health = 0;
-
+		ui.updateHealthDisplay();
 	}
 	
 	public void changeGold(int change) {
@@ -45,6 +62,7 @@ public class Player {
 		if (gold < 0) {
 			gold = 0;
 		}
+		ui.updateGoldDisplay();
 	}
 
 	/**
@@ -60,6 +78,7 @@ public class Player {
 			return false;
 		}
 		;
+		ui.updateScoreDisplay();
 		return true;
 	}
 
@@ -109,7 +128,7 @@ public class Player {
 		return "PLAYER: " + player + "    : SCORE: " + score + "\n";
 
 	}
-
+	
 	/**
 	 * Return name + score in server format.
 	 * 
@@ -119,5 +138,7 @@ public class Player {
 
 		return player + ":" + score;
 	}
+
+
 
 }

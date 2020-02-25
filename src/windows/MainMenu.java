@@ -38,7 +38,7 @@ public class MainMenu implements Window, SwitchableWindow {
 	/**
 	 * MainMenu initialization
 	 */
-	private void initialize() {
+	public void initialize() {
 
 		/**
 		 * Create the main frame and assign its content pane to MainMenu

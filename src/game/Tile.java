@@ -17,6 +17,8 @@ public class Tile extends Rectangle {
 			g.drawImage(TextureHandler.WATER.img, x, y, Constants.WIDTH, Constants.HEIGHT, null);
 		}else if (Type == 0) {
 			g.drawImage(TextureHandler.BRICK.img, x, y, Constants.WIDTH, Constants.HEIGHT, null);
+		}else if(Type == 6) {
+			g.drawImage(TextureHandler.EXIT.img, x, y, Constants.WIDTH, Constants.HEIGHT, null);
 		}
 		else{
 			g.setColor(Color.BLACK);

@@ -1,6 +1,8 @@
 package towers;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import game.Constants;
@@ -16,12 +18,12 @@ import windows.GameWindow;
 public class TowerTracker {
 
 	public static TextureHandler buildMode;
-	public static LinkedList<Tower> towerList, towerToDelete;
+	public static ArrayList<Tower> towerList, towerToDelete;
 
 	public TowerTracker() {
 		buildMode = TextureHandler.EMPTY;
-		towerList = new LinkedList<Tower>();
-		towerToDelete = new LinkedList<Tower>();
+		towerList = new ArrayList<Tower>();
+		towerToDelete = new ArrayList<Tower>();
 
 	}
 
@@ -31,19 +33,23 @@ public class TowerTracker {
 	 * @param mouseButton - which mouse button is pressed
 	 */
 	public void mouseClick(int mouseButton) {
-		
-		//Snyggare att använda dessa?
+
+		// Snyggare att använda dessa?
 		int x = (int) Panel.mousePosition.getX() / 64;
 		int y = (int) Panel.mousePosition.getY() / 64;
-		
+
 		boolean occupied = false;
 		Tower temp = null;
-		for (Tower t : towerList) {
+		
+		
+		for (int i = 0; i< towerList.size(); i++) {
+			Tower t = towerList.get(i);
 			if (t.getXCoord() == 64 * (Panel.mousePosition.x / 64)
 					&& t.getYCoord() == 64 * (Panel.mousePosition.y / 64)) {
 				temp = t;
 				occupied = true;
-			}
+		}
+
 
 		}
 
@@ -74,7 +80,7 @@ public class TowerTracker {
 
 			// Prepare sold towers for deletion
 			// Prevents java.util.ConcurrentModificationException
-			if (buildMode == TextureHandler.EMPTY && occupied) {
+			if (buildMode == TextureHandler.SELL && occupied) {
 
 				GameWindow.player.changeGold(temp.getValue() / 2);
 				towerToDelete.add(temp);
@@ -94,24 +100,54 @@ public class TowerTracker {
 		}
 
 	}
+	
+	
+
+	public void towerAct() {
+		for(int i = 0; i<towerList.size(); i++)
+		towerList.get(i).shoot();
+	}
 
 	/**
-	 * Draw everything related to towers 
-	 * Line 1-3: Draw towers in current list
-	 * Line 4-5: Make the selected tower follow mouse pointer
+	 * Draw everything related to towers Line 1-3: Draw towers in current list Line
+	 * 4-5: Make the selected tower follow mouse pointer Line 8+: Display the range
+	 * of the selected tower
 	 * 
 	 * @param g - Where to draw
 	 */
 	public void draw(Graphics g) {
-		for (Tower t : towerList) {
-			t.draw(g);
+		
+		for (int i = 0; i<towerList.size(); i++) {
+			towerList.get(i).draw(g);
 		}
+		
 		g.drawImage(buildMode.img, (int) Panel.mousePosition.getX(), (int) Panel.mousePosition.getY(), Constants.WIDTH,
 				Constants.HEIGHT, null);
 
+		
+		// Display range while placing tower
+		if (buildMode == TextureHandler.RED_TOWER) {
+			g.setColor(Color.RED);
+			g.drawOval((int) Panel.mousePosition.getX() - (RedTower.getRange() - 32),
+					(int) Panel.mousePosition.getY() - (RedTower.getRange() - 32), 2 * RedTower.getRange(),
+					2 * RedTower.getRange());
+		}
+		if (buildMode == TextureHandler.YELLOW_TOWER) {
+			g.setColor(Color.YELLOW);
+			g.drawOval((int) Panel.mousePosition.getX() - (YellowTower.getRange() - 32),
+					(int) Panel.mousePosition.getY() - (YellowTower.getRange() - 32), 2 * YellowTower.getRange(),
+					2 * YellowTower.getRange());
+		}
+		if (buildMode == TextureHandler.BLUE_TOWER) {
+			g.setColor(Color.BLUE);
+			g.drawOval((int) Panel.mousePosition.getX() - (BlueTower.getRange() - 32),
+					(int) Panel.mousePosition.getY() - (BlueTower.getRange() - 32), 2 * BlueTower.getRange(),
+					2 * BlueTower.getRange());
+		}
+
 	}
 
-	//Safely remove sold towers and clear list of sold towers
+	// Safely remove sold towers and clear list of sold towers
 	public void deleteSoldTowers() {
 		towerList.removeAll(towerToDelete);
 		towerToDelete.clear();

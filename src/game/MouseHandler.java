@@ -18,7 +18,7 @@ public class MouseHandler implements MouseMotionListener, MouseListener{
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		GameWindow.GamePanel.towerGrid.mouseClick(e.getButton());
+		Panel.gamelogic.towerGrid.mouseClick(e.getButton());
 		
 	}
 

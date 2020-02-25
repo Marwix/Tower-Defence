@@ -8,7 +8,7 @@ import game.Panel;
 import game.TextureHandler;
 import windows.GameWindow;
 
-public class GreenEnemy extends Rectangle implements Enemy
+public class InvisEnemy extends Rectangle implements Enemy
 {
 	private int notWalkingTime;
 	private final int whenToWalk;
@@ -42,7 +42,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 	/*
 	 * Creating the monsters with specified health, gold, speed and a enemyID that might be used later for other stuff
 	 */
-	public GreenEnemy() 
+	public InvisEnemy() 
 	{
 		health = 64;
 		gold = 2;
@@ -219,7 +219,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 	 */
 	public void draw(Graphics g) {
 		if(spawn) { 
-			g.drawImage(TextureHandler.GREEN_MONSTER.img, x, y, width, height, null);
+			g.drawImage(TextureHandler.INVIS_MONSTER.img, x, y, width, height, null);
 			g.setColor(Color.GREEN);
 			g.fillRect(x, y - (healthbar + emptySpace) , health, healthbar);
 		}

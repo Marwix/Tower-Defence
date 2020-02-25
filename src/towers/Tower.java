@@ -2,7 +2,7 @@ package towers;
 
 import java.awt.Graphics;
 
-interface Tower {
+interface Tower extends Runnable{
 
 	
 	/**
@@ -13,10 +13,11 @@ interface Tower {
 	
 	/**
 	 * Tell the tower to shoot at closest (if within range) enemy
+	 * Range is calculated as a circle
 	 */
 	public void shoot();
 	/**
-	 * Returns tower value
+	 * Returns tower value(cost)
 	 * @return tower value(cost)
 	 */
 	public int getValue();
@@ -32,6 +33,8 @@ interface Tower {
 	 * @return
 	 */
 	public int getYCoord();
+
+	
 	
 	
 	

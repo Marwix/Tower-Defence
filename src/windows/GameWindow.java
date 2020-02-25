@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import javax.swing.GroupLayout;
@@ -19,18 +21,14 @@ import game.*;
 import mouseSettings.*;
 import towers.TowerTracker;
 
-public class GameWindow implements Window, SwitchableWindow{
+public class GameWindow implements Window, SwitchableWindow, UserInterface{
 	
 	public static Panel GamePanel;
 	public static Player player;
 	
 	private Container GameContent;
-	JLabel goldDisplayLabel, scoreDisplayLabel, hpDisplayLabel;
+	JLabel goldDisplayLabel, scoreDisplayLabel, hpDisplayLabel, progressDisplayLabel;
 	private MouseHandler mouseHandler;
-	private KeyboardHandler keyboard;
-	
-	
-	
 	
 	JLabel mainMenuBackground;
 	JButton quitButton,loadGameButton, highScoreButton,newGameButton;
@@ -51,8 +49,7 @@ public class GameWindow implements Window, SwitchableWindow{
 		GameContent = new Container();
 		GamePanel = new Panel();
 		mouseHandler = new MouseHandler();
-		keyboard = new KeyboardHandler();
-		player = new Player(100, 10);
+		player = new Player(100, 300, this);
 		
 		initialize();
 	}
@@ -66,7 +63,7 @@ public class GameWindow implements Window, SwitchableWindow{
 	private void initialize() throws IOException {
 		
 		
-		GameContent.setLayout(new BorderLayout(0, 0));
+GameContent.setLayout(new BorderLayout(0, 0));
 		
 		//Creating left menu panel
 		//For choosing tower to buy
@@ -134,21 +131,25 @@ public class GameWindow implements Window, SwitchableWindow{
 		infoPanel.setBackground(Color.DARK_GRAY);
 		GameContent.add(infoPanel, BorderLayout.SOUTH);
 		
-		hpDisplayLabel = new JLabel("HP: " +player.getHealth());
+		hpDisplayLabel = new JLabel("HP: "+player.getHealth());
 		hpDisplayLabel.setToolTipText("Health Points - if it reaches 0 you lose");
 		hpDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		hpDisplayLabel.setForeground(Color.RED);
 		
-		
-		goldDisplayLabel = new JLabel("GOLD: " + player.getGold());
+		goldDisplayLabel = new JLabel("GOLD: "+player.getGold());
 		goldDisplayLabel.setToolTipText("Gold: currency use to buy towers");
 		goldDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		goldDisplayLabel.setForeground(Color.YELLOW);
 		
-		scoreDisplayLabel = new JLabel("SCORE: " + player.getScore());
+		scoreDisplayLabel = new JLabel("SCORE: "+player.getScore());
 		scoreDisplayLabel.setToolTipText("Score: earned by killing monsters (and completing rounds?)");
 		scoreDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		scoreDisplayLabel.setForeground(Color.ORANGE);
+		
+		progressDisplayLabel = new JLabel("PROGRESS:");
+		progressDisplayLabel.setToolTipText("Round progress");
+		progressDisplayLabel.setForeground(Color.GREEN);
+		progressDisplayLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
 		
 		JButton mainMenuButton = new JButton("Main Menu");
 		mainMenuButton.addActionListener(e->mainMenu());
@@ -163,6 +164,8 @@ public class GameWindow implements Window, SwitchableWindow{
 		saveButton.setToolTipText("Save your progress");
 		saveButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 12));
 		
+		
+		
 		GroupLayout bottomPanelLayout = new GroupLayout(infoPanel);
 		bottomPanelLayout.setHorizontalGroup(
 			bottomPanelLayout.createParallelGroup(Alignment.LEADING)
@@ -173,7 +176,9 @@ public class GameWindow implements Window, SwitchableWindow{
 					.addComponent(goldDisplayLabel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(scoreDisplayLabel)
-					.addPreferredGap(ComponentPlacement.RELATED, 483, Short.MAX_VALUE)
+					.addGap(126)
+					.addComponent(progressDisplayLabel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 805, Short.MAX_VALUE)
 					.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(pauseButton)
@@ -189,13 +194,14 @@ public class GameWindow implements Window, SwitchableWindow{
 					.addComponent(scoreDisplayLabel)
 					.addComponent(goldDisplayLabel)
 					.addComponent(pauseButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addComponent(progressDisplayLabel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 		);
 		bottomPanelLayout.setAutoCreateContainerGaps(true);
 		//Add menu layout to bottom infoPanel
 		infoPanel.setLayout(bottomPanelLayout);
 		
-		//Game frame - replace later with actual game frame?
+		
 		
 		GameContent.add(GamePanel, BorderLayout.CENTER);
 		GamePanel.addMouseListener(mouseHandler);
@@ -228,22 +234,32 @@ public class GameWindow implements Window, SwitchableWindow{
 	//Public methods for displaying information to player
 	//replace with listeners later?
 	
-	public void setDisplayGold() {
+	@Override
+	public void updateGoldDisplay() {
 		goldDisplayLabel.setText("GOLD: " + player.getGold());
 		goldDisplayLabel.setForeground(Color.YELLOW);
 	
 	}
 	
-	public void setDisplayHP() {
+	@Override
+	public void updateHealthDisplay(){
 		hpDisplayLabel.setText("HP: " + player.getHealth());
 		hpDisplayLabel.setForeground(Color.RED);
 	
 	}
 	
-	public void setDisplayScore() {
+	@Override
+	public void updateScoreDisplay() {
 		scoreDisplayLabel.setText("SCORE: " + player.getScore());
-		scoreDisplayLabel.setForeground(Color.GREEN);
+		scoreDisplayLabel.setForeground(Color.ORANGE);
 	
+	}
+	
+	//FINISH THIS
+	@Override
+	public void updateProgressDisplay() {
+		progressDisplayLabel.setText("PROGRESS: " );
+		scoreDisplayLabel.setForeground(Color.GREEN);
 	}
 
 
@@ -270,9 +286,37 @@ public class GameWindow implements Window, SwitchableWindow{
 		
 	}
 	private void sellTower() {
-		TowerTracker.buildMode=TextureHandler.EMPTY;
+		TowerTracker.buildMode=TextureHandler.SELL;
 		
 	}
+
+
+	@Override
+	public void updateInterface() {
+		updateGoldDisplay();
+		updateHealthDisplay();
+		updateScoreDisplay();
+		updateProgressDisplay();
+		
+	}
+
+
+
+
+
+ {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
+
+
+
 	
 	
 

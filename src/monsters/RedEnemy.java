@@ -1,4 +1,5 @@
 package monsters;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -8,8 +9,8 @@ import game.Panel;
 import game.TextureHandler;
 import windows.GameWindow;
 
-public class GreenEnemy extends Rectangle implements Enemy
-{
+public class RedEnemy extends Rectangle implements Enemy {
+
 	private int notWalkingTime;
 	private final int whenToWalk;
 	
@@ -42,7 +43,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 	/*
 	 * Creating the monsters with specified health, gold, speed and a enemyID that might be used later for other stuff
 	 */
-	public GreenEnemy() 
+	public RedEnemy() 
 	{
 		health = 64;
 		gold = 2;
@@ -123,6 +124,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 	
 	public void passedToBase() {
 		spawn = false;
+		EnemyTracker.clearDead();
 	}
 	
 	public void damagePlayer() {
@@ -186,7 +188,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 				
 			
 			if(Panel.tilemap.tile[yStart][xStart].Type == 6) {
-				passedToBase();
+				//passedToBase();
 				damagePlayer();
 				
 				
@@ -219,7 +221,7 @@ public class GreenEnemy extends Rectangle implements Enemy
 	 */
 	public void draw(Graphics g) {
 		if(spawn) { 
-			g.drawImage(TextureHandler.GREEN_MONSTER.img, x, y, width, height, null);
+			g.drawImage(TextureHandler.RED_MONSTER.img, x, y, width, height, null);
 			g.setColor(Color.GREEN);
 			g.fillRect(x, y - (healthbar + emptySpace) , health, healthbar);
 		}
@@ -273,7 +275,8 @@ public class GreenEnemy extends Rectangle implements Enemy
 			enemyDirections();
 				
 		}
-		
 	}
-
 }
+
+		
+	

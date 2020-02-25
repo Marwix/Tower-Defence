@@ -2,7 +2,7 @@ package monsters;
 import game.*;
 
 
-public class SpawnEnemies {
+public class SpawnEnemies implements Runnable {
 
 	public int waittime;
 	public int waitedtime;
@@ -22,19 +22,35 @@ public class SpawnEnemies {
 	 * Spawning monsters in a time that the developer has specified
 	 * when its spawn resets the timer to 0 again 
 	 */
-	public void enemySpawner() {
-		if(waitedtime >= waittime) {
-			for(int i = 0; i< Panel.greenEnemy.length; i++) {
-				if(!Panel.greenEnemy[i].spawn) {
-					
-					Panel.greenEnemy[i].init();
-					break;
-				}
-			}
-			waitedtime = 0;
-		}else {
-			waitedtime++;
-		}
-	}
 	
+	public void enemySpawner() {
+		
+		for(int i = 0 ; i<EnemyTracker.enemyList.size(); i++) {
+			try {
+				if(waitedtime >= waittime) {
+					if(!EnemyTracker.enemyList.get(i).getSpawn()) {
+						EnemyTracker.enemyList.get(i).init();
+						waitedtime = 0;
+					}
+				}else {
+					waitedtime++;
+				}
+				Thread.sleep(1);
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+}
+	public void startThread() {
+		new Thread(this).start();
+	}
+
+
+
+	@Override
+	public void run() {
+		enemySpawner();
+	
+	
+}
 }

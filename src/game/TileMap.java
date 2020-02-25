@@ -11,7 +11,7 @@ public class TileMap {
 	public MapHandler readfile;
 	
 	public TileMap() {
-		readfile = new MapHandler("map/testmap.txt");
+		readfile = new MapHandler("map/map1.txt");
 		readfile.LoadMapFromText();
 		readGrid();
 	}
